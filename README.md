@@ -143,8 +143,7 @@ aussi les routes utilisées.
 
 ## Architecture de l'application
 
-
-
+<p style="text-align: center"><img src="./images/MicroService.drawio.png"></p>
 
 ## Répartition des tâches
 
