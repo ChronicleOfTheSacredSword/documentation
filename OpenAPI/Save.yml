@@ -1,0 +1,112 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/imtminesals/ServiceSauvegarde/1.0.0
+info:
+  description: API du service de sauvegarde
+  version: "1.0.0"
+  title: Save Service API
+  contact:
+    email: louys370@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: Sauvegarde
+    description: Operations sur les sauvegardes du héros
+paths:
+  /save:
+    get:
+      tags:
+        - Sauvegarde
+      summary: recherche la sauvegarde d'un héros
+      operationId: rechercheSauvegarde
+      description: |
+        En entrant les options appropriés, vous pouvez trouver
+        les sauvegardes d'un héros d'un joueur.
+      parameters:
+        - in: query
+          name: idUser
+          description: Identifiant de l'utilisateur
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+        - in: query
+          name: idHero
+          description: Identifiant du héros
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sauvegarde'
+        '400':
+          description: bad input parameter
+    post:
+      tags:
+        - Sauvegarde
+      summary: ajoute la sauvegarde d'un héros
+      operationId: ajoutSauvegarde
+      description: ajoute la sauvegarde d'un héros
+      responses:
+        '201':
+          description: sauvegarde ajoutée
+        '400':
+          description: 'invalid input, object invalid'
+        '409':
+          description: an existing item already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sauvegarde'
+        description: Sauvegarde à ajouter
+    put:
+      tags:
+        - Sauvegarde
+      summary: met à jour la sauvegarde d'un héros
+      operationId: majSauvegarde
+      description: met à jour la sauvegarde d'un héros
+      responses:
+        '201':
+          description: sauvegarde mise à jour
+        '400':
+          description: 'invalid input, object invalid'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sauvegarde'
+        description: Sauvegarde à mettre à jour
+components:
+  schemas:
+    Sauvegarde:
+      type: object
+      required:
+        - id_hero
+        - id_map
+        - id_box
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 0
+        id_map:
+          type: integer
+          format: int32
+          example: 0
+        id_box:
+          type: integer
+          format: int32
+          example: 0
