@@ -60,6 +60,11 @@ On envoi à un Broker les actions à réaliser dans une Queue :
 
 Ajout d'un service `Combat` qui enverra des messages au broker.
 
+Il utilise la potion.
+
+- `DELETE /inventaire/:id_objet` supprime l'objet de l'inventaire.
+on pourrai aussi simplement mettre à jour avec un `PUT` si le joueur possède l'objet en plusieurs exemplaires.
+
 Il change d'écran.
 
 - `GET /map/:id` pour charger le prochain écran.
