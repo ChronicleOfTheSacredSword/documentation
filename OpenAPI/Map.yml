@@ -7,20 +7,20 @@ servers:
 paths:
   /map/{position}:
     get:
-      summary: Get the map tile info from it's grid position
-      operationId: getMap
+      summary: Récupérer les informations d'une carte à partir de sa position dans la grille
+      operationId: rechercherCarte
       tags:
-        - map
+        - Map
       parameters:
         - name: position
           in: path
           required: true
-          description: The map's position in the grid
+          description: La position de la carte recherchée dans la grille générale
           schema:
             type: string
       responses:
         '200':
-          description: Map's was found
+          description: La carte a été trouvée
           content:
             application/json:
               schema:
