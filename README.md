@@ -62,7 +62,7 @@ Ajout d'un service `Combat` qui enverra des messages au broker.
 
 Il utilise la potion.
 
-- `DELETE /inventaire/:id_objet` supprime l'objet de l'inventaire.
+- `DELETE /inventaire?user=x&object=y` supprime l'objet de l'inventaire.
 on pourrai aussi simplement mettre à jour avec un `PUT` si le joueur possède l'objet en plusieurs exemplaires.
 
 Il change d'écran.
@@ -73,8 +73,6 @@ Il change d'écran.
 Il sauvegarde sa partie avant de quitter la page.
 
 - `PUT /save` pour mettre à jour la position du hero dans la sauvegarde.
-
-
 
 Un utilisateur arrive sur le site, il se créer un compte.
 
