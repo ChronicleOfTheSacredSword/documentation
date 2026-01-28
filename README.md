@@ -1,5 +1,17 @@
 # Documentation Chronicle Of The Sacred Sword
 
+---
+
+## Répartition des tâches
+
+- Thomas : `Authentification` et `User`
+
+- Valentine : `Inventaire`, `Mob` et `Map`
+
+- Louis : `Héros` et `Sauvegarde`
+
+--- 
+
 ## Cas d'utilisation de l'application
 
 Pour définir l'architecture de notre application, nous avons tout d'abord défini un cas d'utilisation typique utilisant toutes les fonctionnalités de l'application.
@@ -138,17 +150,85 @@ Il sauvegarde sa partie avant de quitter la page.
 
 ### Conclusion
 
-par le biais de ce cas d'utilisation nous avons pu determiné les services de notre application avec l'architecture en micro-services mais 
+par le biais de ce cas d'utilisation nous avons pu determiner les services de notre application avec l'architecture en micro-services mais 
 aussi les routes utilisées.
+
+---
 
 ## Architecture de l'application
 
 <p style="text-align: center"><img src="./images/MicroService.drawio.png"></p>
 
-## Répartition des tâches
+Notre application se divise en 8 services. La plupart des services possèdent une base de données.
 
-- Thomas : `Authentification` et `User`
+### Service User
 
-- Valentine : `Inventaire`, `Mob` et `Map`
+Le service `User` permet de stocker, récupérer et modifier les informations relatives aux utilisateurs.
 
-- Louis : `Héros` et `Sauvegarde`
+Voici le schéma de la base de données PostgreSQL `user` :
+
+<p style="text-align: center"><img src="./images/user.png"></p>
+
+
+### Service Authentification 
+
+Le service `Authentification` permet de gérer l'authentification à l'application
+
+La base de données contenu dans ce service est une réplication de la base de donnée `user`.
+
+### Service Heroes
+
+Le service `Heroes` permet de stocker, récupérer et mettre à jour les héros lié à un utilisateur. 
+
+Voici le schéma de la base de données PostgreSQL `hero` :
+
+<p style="text-align: center"><img src="./images/hero.png"></p>
+
+### Service Save
+
+Le service `Save` permet de gérer les sauvegardes de la position des héros d'un utilisateur sur la carte du jeu.
+
+Voici le schéma de la base de données Redis `save` :
+
+<p style="text-align: center"><img src="./images/save.png"></p>
+
+
+### Service Inventory
+
+Le service `Inventory` permet de gérer l'inventaire des héros d'un utilisateur. 
+
+Voici le schéma de la base de données PostgreSQL `inventory` :
+
+<p style="text-align: center"><img src="./images/inventory.png"></p>
+
+La table objet permet de lister tous les objets disponible ainsi que leur utilité.
+
+### Service Mob
+
+Le service `Mob` permet de lister tous les monstres que le joueurs peut rencontrer sur la carte.
+
+Voici le schéma de la base de données Redis `Mob` :
+
+<p style="text-align: center"><img src="./images/mob.png"></p>
+
+### Service Map 
+
+Le service `Map` permet de récuperer l'image correspondant à la carte sur laquelle se trouve le joueur. Ce service permet aussi de lister les monstres que le joueur peut rencontrer sur cette carte.
+
+Voici le schéma de la base de données Redis `Map` :
+
+<p style="text-align: center"><img src="./images/map.png"></p>
+
+### Service Combat
+
+Le service `Combat` est un service qui permettra de mettre à jour les informations des héros, inventaire et la sauvegarde d'un utilisateur. À la fin de chaque combat d'un héros, le service envoie des messages à un Broker afin de mettre à jour les informations via les différents services.
+
+### Service Log
+
+Le service `Log` reçoit via un Broker toutes les actions réalisé par le joueur afin de pouvoir les retraçer dans l'ordre chronologique. Tous les autres services (sauf combat) enverront des messages à ce service de manières asynchrone via le Broker.
+
+--- 
+
+## Broker 
+
+Nous avons décider d'utiliser le Broker `RabbitMQ`
