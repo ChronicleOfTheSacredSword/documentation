@@ -1,0 +1,46 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Map Service
+servers:
+  - url: http://localhost:8080
+paths:
+  /map/{position}:
+    get:
+      summary: Get the map tile info from it's grid position
+      operationId: getMap
+      tags:
+        - map
+      parameters:
+        - name: position
+          in: path
+          required: true
+          description: The map's position in the grid
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Map's was found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Map"
+components:
+  schemas:
+    Map:
+      required:
+        - id_map
+        - position
+        - url
+        - mobs
+      properties:
+        id_map:
+          type: number
+        position:
+          type: string
+        url:
+          type: string
+        mobs:
+          type: array
+          items:
+            type: number
