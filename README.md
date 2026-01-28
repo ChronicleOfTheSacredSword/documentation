@@ -1,2 +1,9 @@
 # Documentation Chronicle Of The Sacred Sword
-Documentation des micro-services COTSS
+
+## Répartition des tâches
+
+- Thomas : `Authentification` et `User`
+
+- Valentine : `Inventaire`, `Mob` et `Map`
+
+- Louis : `Héros` et `Sauvegarde`
