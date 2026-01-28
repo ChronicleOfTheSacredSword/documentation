@@ -188,7 +188,7 @@ Voici le schéma de la base de données PostgreSQL `hero` :
 
 Le service `Save` permet de gérer les sauvegardes de la position des héros d'un utilisateur sur la carte du jeu.
 
-Voici le schéma de la base de données Redis `save` :
+Voici le schéma de la base de données MongoDB `save` :
 
 <p style="text-align: center"><img src="./images/save.png"></p>
 
@@ -207,7 +207,7 @@ La table objet permet de lister tous les objets disponible ainsi que leur utilit
 
 Le service `Mob` permet de lister tous les monstres que le joueurs peut rencontrer sur la carte.
 
-Voici le schéma de la base de données Redis `Mob` :
+Voici le schéma de la base de données MongoDB `Mob` :
 
 <p style="text-align: center"><img src="./images/mob.png"></p>
 
@@ -215,7 +215,7 @@ Voici le schéma de la base de données Redis `Mob` :
 
 Le service `Map` permet de récuperer l'image correspondant à la carte sur laquelle se trouve le joueur. Ce service permet aussi de lister les monstres que le joueur peut rencontrer sur cette carte.
 
-Voici le schéma de la base de données Redis `Map` :
+Voici le schéma de la base de données MongoDB `Map` :
 
 <p style="text-align: center"><img src="./images/map.png"></p>
 
