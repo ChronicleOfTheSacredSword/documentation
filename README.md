@@ -241,3 +241,8 @@ Nous avons mis en place un scan statique du code SonarQube afin de pouvoir retou
 Chaque repository github (donc chaque service) possède une `GitHub Actions` afin de lancer un scan sonarqube à chaque mise à jour de la branche `main`.
 
 Nous pouvons récupérer les données des scans SonarQube depuis le site web `SonarQube Cloud`.
+
+
+<p style="text-align: center"><img src="./images/sonarqube.png"></p>
+
+*Exemple pour le service `authentification`*
