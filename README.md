@@ -232,3 +232,12 @@ Le service `Log` reçoit via un Broker toutes les actions réalisé par le joueu
 ## Broker 
 
 Nous avons décider d'utiliser le Broker `RabbitMQ`
+
+---
+
+### SonarQube
+
+Nous avons mis en place un scan statique du code SonarQube afin de pouvoir retourner des mesures nous permettant de produire le code le plus qualitatif possible.
+Chaque repository github (donc chaque service) possède une `GitHub Actions` afin de lancer un scan sonarqube à chaque mise à jour de la branche `main`.
+
+Nous pouvons récupérer les données des scans SonarQube depuis le site web `SonarQube Cloud`.
