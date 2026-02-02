@@ -227,6 +227,19 @@ Le service `Combat` est un service qui permettra de mettre à jour les informati
 
 Le service `Log` reçoit via un Broker toutes les actions réalisé par le joueur afin de pouvoir les retraçer dans l'ordre chronologique. Tous les autres services (sauf combat) enverront des messages à ce service de manières asynchrone via le Broker.
 
+### Ports des micro-services
+
+5000: USER 
+5001 : AUTH 
+5002 : LOG
+
+5003 : SAVE 
+5004 : Heroes
+
+5005 : INVENTORY 
+5006: MOB 
+5007: MAP
+
 --- 
 
 ## Broker 
