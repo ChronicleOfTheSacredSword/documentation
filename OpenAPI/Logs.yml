@@ -1,0 +1,105 @@
+openapi: 3.0.3
+info:
+  title: Logs API
+  description: API for managing hero logs
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:5002
+    description: Local server
+
+paths:
+  /logs:
+    get:
+      summary: Get all logs
+      responses:
+        '200':
+          description: List of logs in the chronological order
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Log'
+
+    post:
+      summary: Create a log
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateLogRequest'
+      responses:
+        '200':
+          description: Log created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Log'
+
+  /logs/hero/{id}:
+    get:
+      summary: Get logs by hero ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Logs for hero
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Log'
+        '404':
+          description: Hero not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    Log:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        id_hero:
+          type: integer
+          example: 1
+        content:
+          type: string
+          example: Hero defeated the dragon
+      required:
+        - id_hero
+        - content
+
+    CreateLogRequest:
+      type: object
+      properties:
+        id_hero:
+          type: integer
+          example: 1
+        content:
+          type: string
+          example: Hero entered the dungeon
+      required:
+        - id_hero
+        - content
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Hero Not found
+      required:
+        - message

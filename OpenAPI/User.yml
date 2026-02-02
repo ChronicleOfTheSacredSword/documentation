@@ -1,40 +1,44 @@
 openapi: 3.0.3
 info:
-  title: API Utilisateur
-  description: API de gestion des utilisateurs
+  title: User API
+  description: API for managing users
   version: 1.0.0
 
 servers:
-  - url: http://localhost:3000
-    description: Serveur local
+  - url: http://localhost:5000
+    description: Local development server
 
 paths:
   /user/{id}:
     get:
-      summary: Récupérer un utilisateur
-      description: Retourne un utilisateur à partir de son identifiant.
+      summary: Get a user by ID
+      description: Returns a user if it exists
       parameters:
         - name: id
           in: path
           required: true
-          description: Identifiant de l'utilisateur
+          description: Numeric ID of the user
           schema:
             type: integer
             example: 1
       responses:
         '200':
-          description: Utilisateur trouvé
+          description: User found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
         '404':
-          description: Utilisateur non trouvé
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /user:
     post:
-      summary: Créer un utilisateur
-      description: Insère un utilisateur en base et retourne l'utilisateur créé sans le mot de passe.
+      summary: Create a new user
+      description: Creates a new user
       requestBody:
         required: true
         content:
@@ -43,13 +47,29 @@ paths:
               $ref: '#/components/schemas/CreateUserRequest'
       responses:
         '201':
-          description: Utilisateur créé
+          description: User created successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
         '400':
-          description: Données invalides
+          description: Invalid password or bad input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Username already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
 components:
   schemas:
@@ -59,22 +79,35 @@ components:
         id:
           type: integer
           example: 1
-        name:
+        username:
           type: string
-          example: "Jean"
+          example: johndoe
+        createdAt:
+          type: string
+          format: date-time
+          example: 2026-02-02T10:15:30Z
       required:
         - id
-        - name
+        - username
 
     CreateUserRequest:
       type: object
       properties:
-        name:
+        username:
           type: string
-          example: "Jean"
+          example: johndoe
         password:
           type: string
-          example: "monMotDePasse"
+          example: StrongP@ssw0rd
       required:
-        - name
+        - username
         - password
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Invalid User
+      required:
+        - message
