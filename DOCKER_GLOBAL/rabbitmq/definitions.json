@@ -1,0 +1,43 @@
+{
+  "vhosts": [
+    { "name": "/" }
+  ],
+  "users": [
+    {
+      "name": "microservice",
+      "password": "microservice",
+      "tags": "administrator"
+    }
+  ],
+  "permissions": [
+    {
+      "user": "microservice",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "queues": [
+    {
+      "name": "logs_queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    }
+  ],
+  "shovels": [
+    {
+        "name": "logs-http-shovel",
+        "vhost": "/",
+        "value": {
+            "src-uri": "amqp://microservice:microservice@localhost:5672",
+            "src-queue": "logs_queue",
+            "dest-uri": "http://host.docker.internal:5002/logs",
+            "ack-mode": "on-confirm",
+            "add-forward-headers": true
+        }
+    }
+  ]
+}

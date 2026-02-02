@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS logs_services (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    logs_date TIMESTAMP NOT NULL,
+    id_hero INT NOT NULL,
+    content VARCHAR NOT NULL
+);

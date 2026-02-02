@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS Classes (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR NOT NULL,
+    pv int NOT NULL,
+    gold int NOT NULL,
+    atk int NOT NULL
+)

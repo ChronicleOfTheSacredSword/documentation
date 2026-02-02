@@ -1,0 +1,108 @@
+services:
+  master-pg:
+    image: postgres:16
+    container_name: master-pg
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: appdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - master_data:/var/lib/postgresql/data
+      - ./master-init:/docker-entrypoint-initdb.d
+    command: >
+      postgres
+      -c wal_level=replica
+      -c max_wal_senders=10
+      -c max_replication_slots=10
+    networks:
+      - pg-net
+
+  slave-pg:
+    image: postgres:16
+    container_name: slave-pg
+    restart: always
+    depends_on:
+      - master-pg
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    volumes:
+      - slave_data:/var/lib/postgresql/data
+      - ./slave-init:/docker-entrypoint-initdb.d
+    networks:
+      - pg-net
+
+  logs-pg:
+    image: postgres:16
+    container_name: logs-pg
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: appdb
+    ports:
+      - "5434:5432"
+    volumes:
+      - logs_data:/var/lib/postgresql/data
+      - ./logs-init:/docker-entrypoint-initdb.d
+    networks:
+      - pg-net
+
+  classes-pg:
+    image: postgres:16
+    container_name: classes-pg
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: appdb
+    ports:
+      - "5435:5432"
+    volumes:
+      - classes_data:/var/lib/postgresql/data
+      - ./classes-init:/docker-entrypoint-initdb.d
+    networks:
+      - pg-net
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    networks:
+      - pg-net
+
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: microservice
+      RABBITMQ_DEFAULT_PASS: microservice
+    volumes:
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:ro
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - pg-net
+
+networks:
+  pg-net:
+
+volumes:
+  master_data:
+  slave_data:
+  logs_data:
+  classes_data:
