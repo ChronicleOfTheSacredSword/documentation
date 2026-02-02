@@ -234,7 +234,7 @@ Le service `Log` reçoit via un Broker toutes les actions réalisé par le joueu
 `5002` : LOG </br>
 
 `5003` : SAVE </br>
-`5004` : Heroes </br>
+`5004` : HEROES </br>
 
 `5005` : INVENTORY </br>
 `5006` : MOB </br>
