@@ -229,15 +229,15 @@ Le service `Log` reçoit via un Broker toutes les actions réalisé par le joueu
 
 ### Ports des micro-services
 
-5000: USER 
-5001 : AUTH 
+5000: USER
+5001 : AUTH
 5002 : LOG
 
-5003 : SAVE 
+5003 : SAVE
 5004 : Heroes
 
-5005 : INVENTORY 
-5006: MOB 
+5005 : INVENTORY
+5006: MOB
 5007: MAP
 
 --- 
