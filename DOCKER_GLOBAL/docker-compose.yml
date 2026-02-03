@@ -83,7 +83,7 @@ services:
       POSTGRES_DB: appdb
       TZ: Europe/Paris
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - inventory_data:/var/lib/postgresql/data
       - ./inventory-init:/docker-entrypoint-initdb.d
 
   mob-redis:
@@ -96,12 +96,12 @@ services:
     environment:
       - TZ=Europe/Paris
     volumes:
-      - redisdata:/data
+      - mob_data:/data
     command: redis-server --save 60 1 --requirepass mob-redis-dev
 
-  qualite-redis:
+  map-redis:
     image: redis:7.2-alpine
-    container_name: redis-qualite
+    container_name: map-redis
     ports:
       - "6369:6379"
     networks:
@@ -109,7 +109,7 @@ services:
     environment:
       - TZ=Europe/Paris
     volumes:
-      - redisdata:/data
+      - map_data:/data
     command: redis-server --save 60 1 --requirepass redis-qual-dev
 
   pgadmin:
@@ -148,3 +148,6 @@ volumes:
   slave_data:
   logs_data:
   classes_data:
+  map_data:
+  mob_data:
+  inventory_data:
