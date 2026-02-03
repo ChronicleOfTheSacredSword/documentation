@@ -240,6 +240,8 @@ Le service `Log` reçoit via un Broker toutes les actions réalisé par le joueu
 `5006` : MOB </br>
 `5007` : MAP </br>
 
+`5008` : CLASSES </br>
+
 --- 
 
 ## Broker 
