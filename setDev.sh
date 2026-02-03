@@ -29,20 +29,22 @@ start_all() {
         npm install
 
         echo "Starting $repo in background..."
+        # Run dev in background and capture PID
         npm run dev > dev.log 2>&1 &
         PID=$!
+        # Write PID to parent PID_DIR
         echo "$PID" > "../$PID_DIR/$repo.pid"
       )
       echo "→ $repo started in background"
     else
-      echo "Repo $repo does not exist, skipping"
+      echo "⚠️ Repo $repo does not exist, skipping"
     fi
   done
-  echo "All dev servers started"
+  echo "✅ All dev servers started"
 }
 
 stop_all() {
-  echo "Stopping dev servers..."
+  echo "🛑 Stopping dev servers..."
   for pid_file in "$PID_DIR"/*.pid; do
     [ -f "$pid_file" ] || continue
     PID=$(cat "$pid_file")
@@ -52,7 +54,7 @@ stop_all() {
     fi
     rm -f "$pid_file"
   done
-  echo "All dev servers stopped"
+  echo "✅ All dev servers stopped"
 }
 
 # -------- MAIN --------

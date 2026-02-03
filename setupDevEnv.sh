@@ -6,22 +6,22 @@ set -e
 GIT_URL="https://github.com/ChronicleOfTheSacredSword"
 
 REPOS=(
-    documentation
-    user
-    log
-    auth
-    mob
-    heroes
-    save
-    map
-    inventory
-    classes
-    ApplicationWeb
+  documentation
+  user
+  auth
+  log
+  save
+  heroes
+  inventory
+  mob
+  map
+  classes
+  ApplicationWeb
 )
 
 DOCKER_PATH="documentation/DOCKER_GLOBAL"
 ENV_FILE=".env"
-
+BASE_PORT=5000
 # ------------------------
 
 echo "🔄 Clone or pull repositories"
@@ -35,9 +35,12 @@ for repo in "${REPOS[@]}"; do
   fi
 done
 
+#echo ""
+#echo "🐳 Removing all Docker containers"
+#docker rm -f $(docker ps -aq) 2>/dev/null || true
+
 echo ""
 echo "🐳 Running docker compose in documentation"
-
 if [ -d "$DOCKER_PATH" ]; then
   (cd "$DOCKER_PATH" && docker compose up -d)
 else
@@ -52,16 +55,27 @@ sleep 10
 echo ""
 echo "🚀 Initializing projects"
 
+INDEX=0
 for repo in "${REPOS[@]}"; do
   if [[ "$repo" == "documentation" ]]; then
     continue
   fi
 
+  PORT=$((BASE_PORT + INDEX))
+
   if [ -d "$repo" ]; then
-    echo "→ Initializing $repo"
+    echo "→ Initializing $repo (PORT=$PORT)"
 
     if [ -f "$ENV_FILE" ]; then
       cp "$ENV_FILE" "$repo/.env"
+
+      # Remove existing PORT if present
+      sed -i '/^PORT=/d' "$repo/.env"
+
+      # Append PORT
+      echo "" >> "$repo/.env"
+      echo "# Auto-generated port" >> "$repo/.env"
+      echo "PORT=$PORT" >> "$repo/.env"
     else
       echo "⚠️  .env file not found, skipping copy"
     fi
@@ -71,6 +85,8 @@ for repo in "${REPOS[@]}"; do
       npm install
     )
   fi
+
+  INDEX=$((INDEX + 1))
 done
 
 echo ""
