@@ -69,6 +69,48 @@ services:
       - ./classes-init:/docker-entrypoint-initdb.d
     networks:
       - pg-net
+  
+  inventory-pg:
+    image: postgres:16
+    container_name: inventory-pg
+    ports:
+      - "5436:5432"
+    networks:
+      - pg-net
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: appdb
+      TZ: Europe/Paris
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./inventory-init:/docker-entrypoint-initdb.d
+
+  mob-redis:
+    image: redis:7.2-alpine
+    container_name: mob-redis
+    ports:
+      - "6380:6379"
+    networks:
+      - pg-net
+    environment:
+      - TZ=Europe/Paris
+    volumes:
+      - redisdata:/data
+    command: redis-server --save 60 1 --requirepass mob-redis-dev
+
+  qualite-redis:
+    image: redis:7.2-alpine
+    container_name: redis-qualite
+    ports:
+      - "6369:6379"
+    networks:
+      - pg-net
+    environment:
+      - TZ=Europe/Paris
+    volumes:
+      - redisdata:/data
+    command: redis-server --save 60 1 --requirepass redis-qual-dev
 
   pgadmin:
     image: dpage/pgadmin4
