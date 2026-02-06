@@ -7,6 +7,13 @@
 - Valentine : `Inventaire`, `Mob` et `Map`
 
 - Louis : `Héros` et `Sauvegarde`
+--- 
+
+## Lancement de l'application
+1) récupérer le fichier **setupDev.sh** dans le repository documentation.
+2) Le rendre exécutable (avec la commande chmod +x).
+3) L'exécuter : tous les repository nécessaires seront récupérés.
+4) Lancer un à un les répository avec la commande **npm run dev**. il n'est pas nécessaire de faire npm install, le script s'en charge.
 
 --- 
 
