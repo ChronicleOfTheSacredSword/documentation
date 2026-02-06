@@ -1,7 +1,5 @@
 # Documentation Chronicle Of The Sacred Sword
 
----
-
 ## Répartition des tâches
 
 - Thomas : `Authentification` et `User`
