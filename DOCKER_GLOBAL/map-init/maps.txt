@@ -1,0 +1,3 @@
+SET A1 '{"url": "assets/a1.jpg", "mobs": [1, 2]}'
+SET A2 '{"url": "assets/a1.jpg", "mobs": [3]}'
+

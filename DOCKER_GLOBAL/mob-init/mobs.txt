@@ -1,0 +1,6 @@
+SET 1 '{"name": "Blob", "pv": 50, "atk": 5, "drops": []}'
+SADD mobs 1
+SET 2 '{"name": "Bokoblin", "pv": 150, "atk": 20, "drops": [1,2]}'
+SADD mobs 2
+SET 3 '{"name": "Ganondorf", "pv": 1000, "atk": 50, "drops": [3]}'
+SADD mobs 3

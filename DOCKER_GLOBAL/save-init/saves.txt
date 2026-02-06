@@ -1,0 +1,1 @@
+SET 1 {"id": 1, "id_map": "A1", "id_box": 1}

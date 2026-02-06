@@ -9,3 +9,4 @@ CREATE TABLE IF NOT EXISTS Classes (
 INSERT INTO Classes(name, pv, gold, atk) VALUES("Barbare",20,12,30);
 INSERT INTO Classes(name, pv, gold, atk) VALUES("Assassin",10,25,40);
 INSERT INTO Classes(name, pv, gold, atk) VALUES("Mendiant",1,1,10);
+

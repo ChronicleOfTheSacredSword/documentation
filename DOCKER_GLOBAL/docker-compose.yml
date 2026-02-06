@@ -114,6 +114,17 @@ services:
     volumes:
       - mob_data:/data
     command: redis-server --save 60 1 --requirepass mob-redis-dev
+    
+  init-mob-data:
+    image: redis:7.2-alpine
+    container_name: init-mob-data
+    networks:
+      - pg-net
+    depends_on:
+      - mob-redis
+    volumes:
+      - ./mob-init:/init-data
+    entrypoint: ["sh", "-c", "sleep 5 && cat /init-data/mobs.txt | redis-cli -h mob-redis -a mob-redis-dev --pipe"]
 
   map-redis:
     image: redis:7.2-alpine
@@ -128,6 +139,17 @@ services:
       - map_data:/data
     command: redis-server --save 60 1 --requirepass redis-qual-dev
 
+  init-map-data: 
+    image: redis:7.2-alpine
+    container_name: init-map-data
+    networks:
+      - pg-net
+    depends_on:
+      - map-redis
+    volumes:
+      - ./map-init:/init-data:ro
+    entrypoint: ["sh", "-c", "sleep 5 && cat /init-data/maps.txt | redis-cli -h map-redis -a redis-qual-dev --pipe"]
+
   save-redis:
     image: redis:7.2-alpine
     container_name: save-redis
@@ -141,6 +163,17 @@ services:
       - save_data:/data
     command: redis-server --save 60 1 --requirepass redis-qual-dev
 
+  init-save-data:
+    image: redis:7.2-alpine
+    container_name: init-save-data
+    networks:
+      - pg-net
+    depends_on:
+      - save-redis
+    volumes:
+      - ./save-init:/init-data:ro
+    entrypoint: ["sh", "-c", "sleep 5 && cat /init-data/saves.txt | redis-cli -h save-redis -a redis-qual-dev --pipe"]
+  
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin

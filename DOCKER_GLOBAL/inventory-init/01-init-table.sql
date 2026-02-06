@@ -16,3 +16,15 @@ CREATE TABLE item (
 ALTER TABLE inventory
 ADD CONSTRAINT fk_inventory_item
 FOREIGN KEY (id_item) REFERENCES item(id);
+
+INSERT INTO item (name, usable, quantity, unit) VALUES 
+('Potion de vie', true, 50, 1),  
+('Potion de force', true, 10, 1),  
+('Bourse perdue', true, 100, 1),   
+('Corne de Ganon', false, 0, 5);
+
+INSERT INTO inventory (id_hero, id_item, amount) VALUES 
+(1, 1, 5),  
+(1, 2, 3), 
+(1, 3, 1),  
+(1, 4, 1); 
