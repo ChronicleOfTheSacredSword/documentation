@@ -86,6 +86,22 @@ services:
       - inventory_data:/var/lib/postgresql/data
       - ./inventory-init:/docker-entrypoint-initdb.d
 
+  hero-pg:
+    image: postgres:16
+    container_name: hero-pg
+    ports:
+      - "5437:5432"
+    networks:
+      - pg-net
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: appdb
+      TZ: Europe/Paris
+    volumes:
+      - hero_data:/var/lib/postgresql/data
+      - ./hero-init:/docker-entrypoint-initdb.d
+
   mob-redis:
     image: redis:7.2-alpine
     container_name: mob-redis
@@ -103,13 +119,26 @@ services:
     image: redis:7.2-alpine
     container_name: map-redis
     ports:
-      - "6369:6379"
+      - "6381:6379"
     networks:
       - pg-net
     environment:
       - TZ=Europe/Paris
     volumes:
       - map_data:/data
+    command: redis-server --save 60 1 --requirepass redis-qual-dev
+
+  save-redis:
+    image: redis:7.2-alpine
+    container_name: save-redis
+    ports:
+      - "6382:6379"
+    networks:
+      - pg-net
+    environment:
+      - TZ=Europe/Paris
+    volumes:
+      - save_data:/data
     command: redis-server --save 60 1 --requirepass redis-qual-dev
 
   pgadmin:
@@ -151,3 +180,5 @@ volumes:
   map_data:
   mob_data:
   inventory_data:
+  hero_data:
+  save_data:
